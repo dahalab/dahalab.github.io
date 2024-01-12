@@ -43,10 +43,32 @@ document.addEventListener('DOMContentLoaded', function() {
     function showResults() {
         var personalityType = determinePersonalityType(answers);
         var description = getTypeDescription(personalityType);
-        document.getElementById('result').innerHTML = '<h2>당신의 유형: ' + personalityType + '</h2><p>' + description + '</p>';
+        document.getElementById('personality-type').textContent = personalityType;
+        document.getElementById('type-description').textContent = description;
         document.getElementById('question-container').style.display = 'none';
         document.getElementById('progress-container').style.display = 'none';
+    
+        // 공유 버튼 표시
+        if (navigator.share) {
+            document.getElementById('share-button').style.display = 'block';
+        }
     }
+    document.getElementById('share-button').addEventListener('click', function() {
+    var personalityType = document.getElementById('personality-type').textContent;
+    var description = document.getElementById('type-description').textContent;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: '직장 생활 심리테스트 결과',
+            text: `내 유형: ${personalityType}\n${description}`,
+            url: window.location.href
+        })
+        .then(() => console.log('공유 성공!'))
+        .catch((error) => console.log('공유 실패:', error));
+    } else {
+        console.log('Web Share API를 지원하지 않는 브라우저입니다.');
+    }
+    });
     
     function getTypeDescription(type) {
         var typeDescriptions = {
