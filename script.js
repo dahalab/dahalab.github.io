@@ -52,6 +52,9 @@ function showResults() {
     // 질문 및 프로그레스바 숨기기
     document.getElementById('question-container').style.display = 'none';
     document.getElementById('progress-container').style.display = 'none';
+    document.getElementById('restart-button').addEventListener('click', function() {
+        location.reload();
+    });
 }
 
     // 공유 버튼 표시
