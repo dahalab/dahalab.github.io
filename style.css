@@ -32,17 +32,17 @@ body {
     text-align: left;
 }
 
-/* 미디어 쿼리 */
-@media (max-width: 600px) {
-    .question-button {
-        padding: 8px;
-        font-size: 0.9em; /* 더 작은 폰트 크기 */
-    }
+#progress-container {
+    width: 100%; /* 부모 요소의 전체 폭 사용 */
+    background-color: #ddd;
+    border-radius: 5px;
+    margin-top: 20px;
+    height: 20px; /* 프로그레스바의 높이 설정 */
 }
 
-@media (max-width: 400px) {
-    .question-button {
-        padding: 6px;
-        font-size: 0.8em; /* 더 작은 폰트 크기 */
-    }
+#progress-bar {
+    height: 100%; /* 부모 요소의 높이와 동일 */
+    background-color: #007BFF;
+    border-radius: 5px;
+    width: 0%; /* 초기 상태 */
 }
