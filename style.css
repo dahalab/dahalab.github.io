@@ -11,7 +11,6 @@ body {
 
 #quiz-container {
     width: 90%; /* 화면 폭의 90% 사용 */
-    max-width: 600px; /* 최대 폭 제한 */
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
