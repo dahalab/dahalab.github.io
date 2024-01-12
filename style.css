@@ -1,3 +1,4 @@
+/* 기본 스타일 */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -5,12 +6,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #f4f4f4;
 }
 
 #quiz-container {
-    width: 90%; /* 화면 폭의 90% 사용 */
+    width: 90%;
+    max-width: 600px;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -19,10 +21,10 @@ body {
 
 .question-button {
     display: block;
-    width: 100%; /* 부모 요소의 전체 폭 사용 */
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 1em; /* 상대적 폰트 크기 */
+    width: 100%;
+    padding: 15px; /* 크게 조정 */
+    margin-top: 15px; /* 크게 조정 */
+    font-size: 1.2em; /* 크게 조정 */
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
@@ -32,16 +34,43 @@ body {
 }
 
 #progress-container {
-    width: 100%; /* 부모 요소의 전체 폭 사용 */
+    width: 90%;
+    max-width: 600px;
     background-color: #ddd;
     border-radius: 5px;
     margin-top: 20px;
-    height: 20px; /* 프로그레스바의 높이 설정 */
+    height: 20px;
 }
 
 #progress-bar {
-    height: 100%; /* 부모 요소의 높이와 동일 */
+    height: 100%;
     background-color: #007BFF;
     border-radius: 5px;
-    width: 0%; /* 초기 상태 */
+    width: 0%;
+}
+
+/* 모바일 화면 크기 조정 */
+@media screen and (max-width: 600px) {
+    body {
+        /* 모바일 화면에서 요소 크기를 더 크게 조절 */
+        font-size: 32px; /* 크게 조정 */
+    }
+    
+    #quiz-container {
+        width: 95%; /* 모바일 화면에 맞게 크기 조절 */
+        padding: 15px; /* 크게 조정 */
+    }
+
+    .question-button {
+        /* 모바일 화면에서 버튼 스타일 수정 */
+        font-size: 1.5em; /* 크게 조정 */
+        padding: 12px; /* 크게 조정 */
+        margin-top: 12px; /* 크게 조정 */
+    }
+
+    #progress-container {
+        /* 모바일 화면에서 프로그레스바 스타일 수정 */
+        margin-top: 25px; /* 크게 조정 */
+        height: 25px; /* 크게 조정 */
+    }
 }

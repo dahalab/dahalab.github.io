@@ -74,6 +74,22 @@ document.getElementById('share-button').addEventListener('click', function() {
         .catch((error) => console.log('공유 실패:', error));
     } else {
         console.log('Web Share API를 지원하지 않는 브라우저입니다.');
+        // text와 url을 결합한 문자열을 클립보드에 복사
+        const textToCopy = `내 유형: ${personalityType}\n${description}\nURL: ${window.location.href}`;
+        copyToClipboard(textToCopy);
+    }
+    
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+            .then(function() {
+                // 복사 성공 시 처리
+                alert('클립보드에 복사되었습니다 붙여넣기 하세요!')
+                console.log('텍스트가 클립보드에 복사되었습니다.');
+            })
+            .catch(function(err) {
+                // 복사 실패 시 처리
+                console.error('텍스트 복사 중 오류 발생: ', err);
+            });
     }
 });
     function getTypeDescription(type) {
