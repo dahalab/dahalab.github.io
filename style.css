@@ -1,21 +1,22 @@
 /* style.css */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    background-color: #f4f4f4;
 }
 
 #quiz-container {
+    width: 90%;
+    max-width: 600px;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 500px;
 }
 
 h1 {
@@ -55,7 +56,26 @@ h1 {
     width: 0%;
 }
 
-#result {
-    margin-top: 20px;
-    text-align: center;
+/* 미디어 쿼리 */
+@media (max-width: 600px) {
+    #quiz-container {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .question-button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 18px;
+    }
+
+    .question-button {
+        font-size: 12px;
+        padding: 6px;
+    }
 }
