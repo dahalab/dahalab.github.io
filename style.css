@@ -3,16 +3,17 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden; /* 가로 스크롤 막기 */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
+    height: 100vh; /* 화면 높이의 100%를 사용하여 가운데 정렬 */
 }
 
 #quiz-container {
-    width: 90%;
-    max-width: 600px;
+    width: 100%; /* 화면 너비에 맞게 크기 조절 */
+    max-width: 375px; /* iPhone 12 화면 너비 */
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -22,9 +23,9 @@ body {
 .question-button {
     display: block;
     width: 100%;
-    padding: 15px; /* 크게 조정 */
-    margin-top: 15px; /* 크게 조정 */
-    font-size: 1.2em; /* 크게 조정 */
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 1.2em;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
@@ -34,11 +35,11 @@ body {
 }
 
 #progress-container {
-    width: 90%;
-    max-width: 600px;
+    width: 100%; /* 화면 너비에 맞게 크기 조절 */
+    max-width: 375px; /* iPhone 12 화면 너비 */
+    margin-top: 20px;
     background-color: #ddd;
     border-radius: 5px;
-    margin-top: 20px;
     height: 20px;
 }
 
@@ -49,28 +50,41 @@ body {
     width: 0%;
 }
 
+#share-button {
+    display: block;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#share-button:hover {
+    background-color: #0056b3;
+}
+
 /* 모바일 화면 크기 조정 */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 375px) {
     body {
-        /* 모바일 화면에서 요소 크기를 더 크게 조절 */
-        font-size: 32px; /* 크게 조정 */
+        font-size: 18px;
     }
     
     #quiz-container {
-        width: 95%; /* 모바일 화면에 맞게 크기 조절 */
-        padding: 15px; /* 크게 조정 */
+        padding: 15px;
     }
 
     .question-button {
-        /* 모바일 화면에서 버튼 스타일 수정 */
-        font-size: 1.5em; /* 크게 조정 */
-        padding: 12px; /* 크게 조정 */
-        margin-top: 12px; /* 크게 조정 */
+        font-size: 1.5em;
+        padding: 12px;
+        margin-top: 12px;
     }
 
     #progress-container {
-        /* 모바일 화면에서 프로그레스바 스타일 수정 */
-        margin-top: 25px; /* 크게 조정 */
-        height: 25px; /* 크게 조정 */
+        margin-top: 25px;
+        height: 25px;
     }
 }
