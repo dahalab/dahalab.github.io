@@ -40,13 +40,19 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('progress-bar').style.width = progressPercentage + '%';
     }
 
-    function showResults() {
+function showResults() {
     var personalityType = determinePersonalityType(answers);
     var description = getTypeDescription(personalityType);
     document.getElementById('personality-type').textContent = personalityType;
     document.getElementById('type-description').textContent = description;
+
+    // 결과 div 표시
+    document.getElementById('result').style.display = 'block';
+
+    // 질문 및 프로그레스바 숨기기
     document.getElementById('question-container').style.display = 'none';
     document.getElementById('progress-container').style.display = 'none';
+}
 
     // 공유 버튼 표시
     if (navigator.share) {
