@@ -35,7 +35,7 @@ body {
 }
 
 #progress-container {
-    width: 100%; /* 화면 너비에 맞게 크기 조절 */
+    width: 80%; /* 화면 너비에 맞게 크기 조절 */
     max-width: 375px; /* iPhone 12 화면 너비 */
     margin-top: 20px;
     background-color: #ddd;
@@ -52,7 +52,7 @@ body {
 
 #share-button, #restart-button {
     display: inline-block; /* 인라인 블록 요소로 표시 */
-    margin-right: 10px; /* 오른쪽 여백 추가 */
+    margin: 10px; /* 오른쪽 여백 추가 */
 }
 #share-button {
     background-color: #007BFF;
