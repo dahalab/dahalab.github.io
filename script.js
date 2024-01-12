@@ -41,19 +41,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showResults() {
-        var personalityType = determinePersonalityType(answers);
-        var description = getTypeDescription(personalityType);
-        document.getElementById('personality-type').textContent = personalityType;
-        document.getElementById('type-description').textContent = description;
-        document.getElementById('question-container').style.display = 'none';
-        document.getElementById('progress-container').style.display = 'none';
-    
-        // 공유 버튼 표시
-        if (navigator.share) {
-            document.getElementById('share-button').style.display = 'block';
-        }
+    var personalityType = determinePersonalityType(answers);
+    var description = getTypeDescription(personalityType);
+    document.getElementById('personality-type').textContent = personalityType;
+    document.getElementById('type-description').textContent = description;
+    document.getElementById('question-container').style.display = 'none';
+    document.getElementById('progress-container').style.display = 'none';
+
+    // 공유 버튼 표시
+    if (navigator.share) {
+        document.getElementById('share-button').style.display = 'block';
     }
-    document.getElementById('share-button').addEventListener('click', function() {
+}
+
+document.getElementById('share-button').addEventListener('click', function() {
     var personalityType = document.getElementById('personality-type').textContent;
     var description = document.getElementById('type-description').textContent;
     
@@ -68,8 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.log('Web Share API를 지원하지 않는 브라우저입니다.');
     }
-    });
-    
+});
     function getTypeDescription(type) {
         var typeDescriptions = {
             "혁신가": "항상 새로운 아이디어로 모두를 놀라게 하는 당신은 직장의 스파크!",
