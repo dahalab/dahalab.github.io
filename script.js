@@ -58,7 +58,7 @@ function showResults() {
     if (navigator.share) {
         document.getElementById('share-button').style.display = 'block';
     }
-}
+
 
 document.getElementById('share-button').addEventListener('click', function() {
     var personalityType = document.getElementById('personality-type').textContent;
