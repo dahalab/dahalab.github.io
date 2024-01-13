@@ -13,6 +13,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-wrap: wrap;
+    align-content: center;
 }
 
 #quiz-container {
