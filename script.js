@@ -70,7 +70,7 @@ document.getElementById('share-button').addEventListener('click', function() {
     if (navigator.share) {
         navigator.share({
             title: '직장 생활 심리테스트 결과',
-            text: `내 유형: ${personalityType}\n${description}`,
+            text: `내 유형: ${personalityType}`,
             url: window.location.href
         })
         .then(() => console.log('공유 성공!'))
@@ -78,7 +78,7 @@ document.getElementById('share-button').addEventListener('click', function() {
     } else {
         console.log('Web Share API를 지원하지 않는 브라우저입니다.');
         // text와 url을 결합한 문자열을 클립보드에 복사
-        const textToCopy = `내 유형: ${personalityType}\n${description}\nURL: ${window.location.href}`;
+        const textToCopy = `내 유형: ${personalityType}\nURL: ${window.location.href}`;
         copyToClipboard(textToCopy);
     }
     
