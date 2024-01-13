@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 테스트</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="start-screen">
+            <h1>나의 MBTI 유형 찾기</h1>
+            <p>간단한 질문 10개로 당신의 MBTI 유형을 알아보세요!</p>
+            <button id="start-btn">시작하기</button>
+        </div>
+
+        <div id="question-screen" class="hidden">
+            <h2 id="question-title"></h2>
+            <div id="choices-container"></div>
+        </div>
+
+        <div id="result-screen" class="hidden">
+            <h2 id="result-title"></h2>
+            <p id="result-description"></p>
+            <button id="share-btn">결과 내용 공유하기</button>
+            <button id="restart-btn">테스트 다시하기</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
