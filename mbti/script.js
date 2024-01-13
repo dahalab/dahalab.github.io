@@ -1,195 +1,298 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const startBtn = document.getElementById('start-btn');
-    const questionScreen = document.getElementById('question-screen');
-    const startScreen = document.getElementById('start-screen');
-    const resultScreen = document.getElementById('result-screen');
-    const questionTitle = document.getElementById('question-title');
-    const choicesContainer = document.getElementById('choices-container');
-    const resultTitle = document.getElementById('result-title');
-    const resultDescription = document.getElementById('result-description');
-    const shareBtn = document.getElementById('share-btn');
-    const restartBtn = document.getElementById('restart-btn');
-
-    // MBTI 테스트 데이터 (질문, 선택지, 결과 유형)
-    let questions = [
-        {
-            title: "친구가 파티에 초대했을 때 당신의 반응은?",
-            choices: [
-                { text: "기다렸던 순간! 바로 준비를 시작한다.", score: { E: 2 } },
-                { text: "일정을 체크하고 조용히 계획을 세운다.", score: { I: 2 } },
-                { text: "먼저 누가 오는지 알아보고 결정한다.", score: { E: 1, I: 1 } },
-                { text: "가급적 피하고 싶다. 집이 최고!", score: { I: 2 } }
-            ]
-        },
-        {
-            title: "새로운 취미를 시작할 때 당신의 접근 방식은?",
-            choices: [
-                { text: "바로 시작! 일단 해보는 거지.", score: { P: 2 } },
-                { text: "관련 책이나 자료부터 찾아본다.", score: { J: 2 } },
-                { text: "친구나 지인의 추천을 받는다.", score: { F: 2 } },
-                { text: "별로 새로운 취미에 관심이 없다.", score: { I: 2 } }
-            ]
-        },
-        {
-            title: "주말에 가장 하고 싶은 활동은?",
-            choices: [
-                { text: "친구들과 야외 활동!", score: { E: 2 } },
-                { text: "조용한 카페에서 책 읽기.", score: { I: 2 } },
-                { text: "영화나 드라마 시청.", score: { N: 2 } },
-                { text: "그냥 푹 쉬고 싶다.", score: { P: 2 } }
-            ]
-        },
-        {
-            title: "문제에 부딪혔을 때 당신의 대처 방법은?",
-            choices: [
-                { text: "즉흥적으로 해결한다.", score: { P: 2 } },
-                { text: "체계적으로 단계를 밟아간다.", score: { J: 2 } },
-                { text: "다른 사람들의 조언을 구한다.", score: { F: 2 } },
-                { text: "가능하면 피하려고 한다.", score: { I: 2 } }
-            ]
-        },
-        {
-            title: "친구가 위로가 필요할 때 당신의 반응은?",
-            choices: [
-                { text: "활기찬 말로 기분을 전환시켜 준다.", score: { E: 2 } },
-                { text: "조용히 듣고 공감해 준다.", score: { F: 2 } },
-                { text: "실질적인 해결책을 제시한다.", score: { T: 2 } },
-                { text: "어떻게 위로해야 할지 모르겠다.", score: { I: 2 } }
-            ]
-        },
-        {
-            title: "새로운 아이디어가 떠올랐을 때 당신의 행동은?",
-            choices: [
-                { text: "바로 실천에 옮긴다.", score: { E: 2 } },
-                { text: "장단점을 면밀히 분석한다.", score: { J: 2 } },
-                { text: "주변 사람들과 의견을 나눈다.", score: { F: 2 } },
-                { text: "아이디어를 고민만 하고 끝낸다.", score: { I: 2 } }
-            ]
-        },
-        {
-            title: "휴가 계획을 세울 때 당신의 스타일은?",
-            choices: [
-                { text: "계획 없이 자유롭게!", score: { P: 2 } },
-                { text: "모든 것을 철저히 계획한다.", score: { J: 2 } },
-                { text: "다른 사람의 계획에 맞춘다.", score: { F: 2 } },
-                { text: "가급적 집에서 휴식을 취한다.", score: { I: 2 } }
-            ]
-        },
-        {
-            title: "새로운 사람을 만났을 때 당신의 태도는?",
-            choices: [
-                { text: "적극적으로 다가가 대화를 시작한다.", score: { E: 2 } },
-                { text: "조용히 관찰하며 상황을 파악한다.", score: { I: 2 } },
-                { text: "상대방이 먼저 말을 걸기를 기다린다.", score: { I: 1, E: 1 } },
-                { text: "새로운 사람 만나는 것을 꺼린다.", score: { I: 2 } }
-            ]
-        },
-        {
-            title: "중요한 결정을 내려야 할 때 당신은?",
-            choices: [
-                { text: "직감을 따른다.", score: { P: 2 } },
-                { text: "데이터와 사실에 기반하여 결정한다.", score: { J: 2 } },
-                { text: "주변 사람들의 의견을 참고한다.", score: { F: 2 } },
-                { text: "결정하기 어려워 미루는 편이다.", score: { I: 2 } }
-            ]
-        },
-        {
-            title: "주로 어떤 유형의 책을 선호하나요?",
-            choices: [
-                { text: "모험과 판타지가 가득한 소설.", score: { N: 2 } },
-                { text: "사실과 정보를 담은 교양서적.", score: { S: 2 } },
-                { text: "사람들의 이야기가 담긴 자서전.", score: { F: 2 } },
-                { text: "가볍게 읽을 수 있는 잡지나 만화.", score: { P: 2 } }
-            ]
-        }
-    ];
-    let currentQuestionIndex = 0;
-    let score = { E: 0, I: 0, N: 0, S: 0, T: 0, F: 0, J: 0, P: 0 };
-
-    startBtn.addEventListener('click', function() {
-        startScreen.classList.add('hidden');
-        questionScreen.classList.remove('hidden');
-        showQuestion();
-    });
-
-    function showQuestion() {
-        let question = questions[currentQuestionIndex];
-        questionTitle.textContent = question.title;
-        choicesContainer.innerHTML = '';
-        question.choices.forEach(function(choice, index) {
-            let button = document.createElement('button');
-            button.textContent = choice.text;
-            button.addEventListener('click', function() {
-                updateScore(choice.score);
-                if (currentQuestionIndex < questions.length - 1) {
-                    currentQuestionIndex++;
-                    showQuestion();
-                } else {
-                    showResult();
-                }
-            });
-            choicesContainer.appendChild(button);
-        });
+// 질문과 선택지 데이터
+const questions = [
+    // 질문 1
+    {
+        question: "당신이 주말에 가장 좋아하는 활동은 무엇인가요?",
+        choices: ["영화 보기", "등산 가기", "친구와 만나기", "책 읽기"],
+        scores: [2, 1, 0, -1]
+    },
+    // 질문 2
+    {
+        question: "여행을 가려고 합니다. 어떤 여행지를 선호하나요?",
+        choices: ["해변 리조트", "산 속 캠핑", "도시 여행", "자연 속 힐링"],
+        scores: [2, 1, 0, -1]
+    },
+    // 질문 3
+    {
+        question: "당신이 가장 중요하게 생각하는 가치는 무엇인가요?",
+        choices: ["자유", "친환경", "성장", "평화"],
+        scores: [2, 1, 0, -1]
+    },
+    // 질문 4
+    {
+        question: "좋아하는 계절은 어떤 계절인가요?",
+        choices: ["봄", "여름", "가을", "겨울"],
+        scores: [2, 1, 0, -1]
+    },
+    // 질문 5
+    {
+        question: "친구들과 만날 때 주로 무엇을 하나요?",
+        choices: ["외식하기", "스포츠 활동", "영화 보기", "집에서 대화하기"],
+        scores: [2, 1, 0, -1]
+    },
+    // 질문 6
+    {
+        question: "당신이 스트레스를 풀 때 어떤 활동을 하나요?",
+        choices: ["운동하기", "음악 듣기", "독서", "요리하기"],
+        scores: [2, 1, 0, -1]
+    },
+    // 질문 7
+    {
+        question: "자주 참여하는 사회적 활동은 무엇인가요?",
+        choices: ["봉사 활동", "스포츠 클럽", "예술 단체", "독서 모임"],
+        scores: [2, 1, 0, -1]
+    },
+    // 질문 8
+    {
+        question: "당신이 좋아하는 음악 장르는 무엇인가요?",
+        choices: ["팝", "락", "재즈", "클래식"],
+        scores: [2, 1, 0, -1]
+    },
+    // 질문 9
+    {
+        question: "휴가를 가려고 합니다. 어떤 유형의 휴가를 원하나요?",
+        choices: ["도시 여행", "자연 속 힐링", "문화 체험", "레저 스포츠"],
+        scores: [2, 1, 0, -1]
+    },
+    // 질문 10
+    {
+        question: "당신의 성격을 가장 잘 표현하는 단어는 무엇인가요?",
+        choices: ["외향적", "내향적", "창의적", "안정적"],
+        scores: [2, 1, 0, -1]
     }
+];
 
-    function updateScore(choiceScore) {
-        for (let dimension in choiceScore) {
-            score[dimension] += choiceScore[dimension];
-        }
-    }
+// 결과 유형 데이터
+const results = [
+    {
+        animal: "사자",
+        reason: "리더십과 사회성",
+        traits: ["타고난 리더", "자신감 있음", "사교적", "도전을 두려워하지 않음"],
+        suitableWith: "호랑이",
+        message: "당신의 리더십은 많은 이들에게 영감을 줍니다. 당신의 결단력과 사교성으로 주변 사람들을 이끌어주세요."
+    },
+    {
+        animal: "고릴라",
+        reason: "힘과 신중함",
+        traits: ["강인함", "똑똑함", "조용한 힘을 가짐", "주변을 보호함"],
+        suitableWith: "팬더",
+        message: "당신은 힘이 있지만 신중한 성격입니다. 주변을 보호하며 지혜로운 결정을 내립니다."
+    },
+    {
+        animal: "호랑이",
+        reason: "용기와 자신감",
+        traits: ["용기 있음", "자신감 넘침", "도전을 즐김", "포커스된 태도"],
+        suitableWith: "사자",
+        message: "당신은 용기와 자신감으로 무장한 사람입니다. 어려운 상황에서도 도전하는 스타일입니다."
+    },
+    {
+        animal: "팬더",
+        reason: "평화와 균형",
+        traits: ["평화로움", "균형을 유지함", "친화력 있음", "스트레스를 잘 푸는 편"],
+        suitableWith: "고릴라",
+        message: "당신은 평화와 균형을 추구하는 사람입니다. 친화력으로 주변 사람들과 조화롭게 지내요."
+    },
+    {
+        animal: "물개",
+        reason: "창의력과 유연함",
+        traits: ["창의력 넘침", "유연함", "높은 호기심", "자유로운 사고"],
+        suitableWith: "해마",
+        message: "당신은 창의력과 유연성이 뛰어난 사람입니다. 새로운 아이디어와 경험을 즐기세요."
+    },
+    {
+        animal: "해마",
+        reason: "지적 호기심과 흥미",
+        traits: ["지적 호기심", "다양한 관심사", "끊임없는 학습", "자기 계발 중심"],
+        suitableWith: "물개",
+        message: "당신은 지적 호기심이 넘치고 학습을 즐기는 사람입니다. 다양한 분야에 관심을 가지세요."
+    },
+    {
+        animal: "코끼리",
+        reason: "지혜와 차분함",
+        traits: ["지혜로움", "차분함", "다른 사람을 지지함", "장기적인 목표 설정"],
+        suitableWith: "기린",
+        message: "당신은 지혜로운 성격으로 장기적인 목표를 설정하며 차분하게 나아갑니다."
+    },
+    {
+        animal: "기린",
+        reason: "유연성과 민첩함",
+        traits: ["유연성", "민첩함", "적응력 있음", "다양한 상황 처리"],
+        suitableWith: "코끼리",
+        message: "당신은 다양한 상황에서 민첩하게 대처하며 유연성을 갖춘 사람입니다."
+    },
+    {
+        animal: "원숭이",
+        reason: "재미와 에너지",
+        traits: ["재미있음", "에너지 넘침", "소통 능력", "새로운 경험을 추구"],
+        suitableWith: "오리",
+        message: "당신은 항상 재미와 에너지를 가득 느끼며 새로운 경험을 즐깁니다."
+    },
+    {
+        animal: "오리",
+        reason: "친화력과 신뢰",
+        traits: ["친화력", "신뢰성 있음", "사회적 능력", "팀 플레이어"],
+        suitableWith: "원숭이",
+        message: "당신은 친화력으로 주변 사람들과 어울리며 신뢰를 주고받는 사람입니다."
+    },
+    {
+        animal: "늑대",
+        reason: "독립과 자유",
+        traits: ["독립적", "자유로움", "판단력 있음", "자기 주도적"],
+        suitableWith: "여우",
+        message: "당신은 독립적이고 자유로운 성격으로 자기 주도적으로 일을 처리합니다."
+    },
+    {
+        animal: "여우",
+        reason: "똑똑함과 계획",
+        traits: ["똑똑함", "전략적 사고", "논리적", "목표를 설정하고 추진"],
+        suitableWith: "늑대",
+        message: "당신은 똑똑하고 전략적인 사고를 가진 사람입니다. 목표를 향해 계획을 세우세요."
+    },
+    {
+        animal: "펭귄",
+        reason: "침착함과 인내",
+        traits: ["침착함", "인내심", "언제나 차분함", "평온한 성격"],
+        suitableWith: "해마",
+        message: "당신은 침착하고 인내심이 강한 사람입니다. 어려운 상황에서도 차분하게 대처합니다."
+    },
+    {
+        animal: "하마",
+        reason: "창의력과 차분함",
+        traits: ["창의적", "차분함", "비판적 사고", "자기반성 능력"],
+        suitableWith: "기린",
+        message: "당신은 창의적이고 차분한 사람입니다. 비판적 사고로 문제를 해결하세요."
+    },
+    {
+        animal: "앵무새",
+        reason: "소통과 다양성",
+        traits: ["순발력 있음", "다양한 언어 능력", "타인을 이해함", "소통 능력"],
+        suitableWith: "오리",
+        message: "당신은 소통 능력이 뛰어나고 다양성을 존중합니다. 타인과의 소통을 즐기세요."
+    },
+];
 
-    function calculateResult() {
-        let result = '';
-        result += score['E'] > score['I'] ? 'E' : 'I';
-        result += score['N'] > score['S'] ? 'N' : 'S';
-        result += score['T'] > score['F'] ? 'T' : 'F';
-        result += score['J'] > score['P'] ? 'J' : 'P';
-        return result;
-    }
+// 현재 질문 및 선택지의 인덱스
+let currentQuestionIndex = 0;
 
-    function showResult() {
-        let mbtiType = calculateResult();
-        questionScreen.classList.add('hidden');
-        resultScreen.classList.remove('hidden');
-        resultTitle.textContent = `당신의 MBTI 유형: ${mbtiType}`;
-        resultDescription.textContent = mbtiDescriptions[mbtiType]; // mbtiDescriptions는 각 MBTI 유형에 대한 설명을 담은 객체
-    }
+// 사용자의 선택 저장 배열
+const userChoices = [];
 
-    shareBtn.addEventListener('click', function() {
-        if (navigator.share) {
-            navigator.share({
-                title: 'MBTI 테스트 결과',
-                text: `내 MBTI 유형: ${resultTitle.textContent}\n${resultDescription.textContent}`,
-                url: window.location.href
-            }).then(() => console.log('공유 성공!'))
-            .catch((error) => console.log('공유 실패', error));
+// HTML 요소 참조
+const startScreen = document.getElementById("start-screen");
+const questionScreen = document.getElementById("question-screen");
+const resultScreen = document.getElementById("result-screen");
+const questionTitle = document.getElementById("question-title");
+const choicesContainer = document.getElementById("choices");
+const resultImage = document.getElementById("result-image");
+const resultDescription = document.getElementById("result-description");
+const shareButton = document.getElementById("share-button");
+const restartButton = document.getElementById("restart-button");
+
+// 시작 버튼 클릭 이벤트
+document.getElementById("start-button").addEventListener("click", startTest);
+
+// 선택지 버튼 클릭 이벤트
+choicesContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("choice-button")) {
+        const choiceIndex = parseInt(event.target.dataset.choiceIndex);
+        userChoices.push(choiceIndex);
+
+        // 다음 질문으로 이동 또는 결과 화면 표시
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            showQuestion();
         } else {
-            navigator.clipboard.writeText(`내 MBTI 유형: ${resultTitle.textContent}\n${resultDescription.textContent}\n${window.location.href}`)
-                .then(() => alert('결과가 클립보드에 복사되었습니다!'));
+            showResult();
         }
-    });
-
-    restartBtn.addEventListener('click', function() {
-        window.location.reload();
-    });
+    }
 });
 
-// MBTI 유형별 설명 객체 (예시)
-const mbtiDescriptions = {
-    'ISTJ': '책임감이 강하고 현실적인 ISTJ. 신뢰성이 높고 조직적으로 일을 처리하는 당신은 철저한 계획가입니다.',
-    'ISFJ': '따뜻하고 세심한 ISFJ. 안정과 조화를 중시하며, 주변 사람들을 배려하는 보호자의 성격을 가졌습니다.',
-    'INFJ': '이상주의적이고 통찰력 있는 INFJ. 사람들의 감정을 잘 이해하고, 높은 도덕적 가치를 추구합니다.',
-    'INTJ': '전략적 사고가 뛰어난 INTJ. 독립적이고 창의적인 해결책을 제시하며, 비전을 현실로 만드는 데 능숙합니다.',
-    'ISTP': '융통성 있고 분석적인 ISTP. 호기심이 많고 실용적인 해결책을 찾는 데 능숙한 현실주의자입니다.',
-    'ISFP': '온화하고 예술적인 ISFP. 현재에 집중하며, 감각적 경험을 중시하는 평화로운 탐험가입니다.',
-    'INFP': '이상적이고 창의적인 INFP. 내면의 가치에 따라 살며, 영감을 주는 소통을 중요시합니다.',
-    'INTP': '논리적이고 호기심 많은 INTP. 이론적 탐구를 즐기며, 복잡한 문제를 해결하는 데 탁월한 능력을 가졌습니다.',
-    'ESTP': '활동적이고 사교적인 ESTP. 실용적인 해결책을 즉시 찾아내며, 도전을 즐기는 에너지 넘치는 사람입니다.',
-    'ESFP': '재기발랄하고 활동적인 ESFP. 즉흥적이고 사교적으로, 주변 사람들과 즐거운 시간을 보내는 것을 좋아합니다.',
-    'ENFP': '열정적이고 창의적인 ENFP. 새로운 가능성을 탐구하며, 주변 사람들을 격려하는 영감의 원천입니다.',
-    'ENTP': '발명적이고 끊임없이 새로운 아이디어를 창조하는 ENTP. 독창적인 사고와 도전적인 자세를 가지고 있습니다.',
-    'ESTJ': '결단력 있고 체계적인 ESTJ. 사물을 명확하고 논리적으로 처리하며, 효율적인 관리자의 특성을 지니고 있습니다.',
-    'ESFJ': '사교적이고 친절한 ESFJ. 타인의 필요와 감정에 민감하게 반응하며, 조화로운 관계 유지를 중요시합니다.',
-    'ENFJ': '열정적이고 카리스마 있는 ENFJ. 사람들을 격려하고 영감을 주며, 긍정적인 변화를 이끌어내는 리더입니다.',
-    'ENTJ': '대담하고 지도력이 있는 ENTJ. 자신감과 야심이 있으며, 효과적인 계획과 조직을 통해 목표를 달성합니다.'
-};
+// 결과 화면에서 '테스트 다시하기' 버튼 클릭 이벤트
+restartButton.addEventListener("click", restartTest);
+
+// 테스트 시작 함수
+function startTest() {
+    startScreen.style.display = "none";
+    questionScreen.style.display = "block";
+    showQuestion();
+}
+
+// 다음 질문 표시 함수
+function showQuestion() {
+    const question = questions[currentQuestionIndex];
+    questionTitle.textContent = question.question;
+    choicesContainer.innerHTML = "";
+
+    question.choices.forEach((choice, index) => {
+        const choiceButton = document.createElement("button");
+        choiceButton.classList.add("choice-button");
+        choiceButton.textContent = choice;
+        choiceButton.dataset.choiceIndex = index;
+        choicesContainer.appendChild(choiceButton);
+    });
+}
+
+// 결과 화면 표시 함수
+function showResult() {
+    questionScreen.style.display = "none";
+    resultScreen.style.display = "block";
+
+    // 계산 로직을 사용하여 결과 유형 결정
+    const resultIndex = calculateResult();
+    const result = results[resultIndex];
+
+    // 결과 이미지, 설명, 공유 기능 설정
+    resultImage.src = `result_${resultIndex}.png`;
+
+    // Web Share API를 지원하는 경우 '테스트 공유하기' 버튼 활성화
+    if (navigator.share) {
+        shareButton.style.display = "block";
+        shareButton.addEventListener("click", shareTest);
+    } else {
+        // Web Share API를 지원하지 않는 경우 클립보드에 복사 기능 활성화
+        shareButton.textContent = "테스트 결과 공유하기";
+        shareButton.addEventListener("click", copyToClipboard);
+    }
+}
+
+// 결과 계산 로직 (여기에서 실제 계산을 수행하십시오)
+function calculateResult() {
+    // 여기에 사용자의 선택을 기반으로 결과를 계산하는 로직을 작성하세요.
+    // 예를 들어, userChoices 배열을 분석하여 결과 인덱스를 결정합니다.
+    // 이 예제에서는 임의의 결과를 반환합니다.
+    return Math.floor(Math.random() * results.length);
+}
+
+// 테스트 다시 시작 함수
+function restartTest() {
+    currentQuestionIndex = 0;
+    userChoices.length = 0;
+    resultScreen.style.display = "none";
+    startScreen.style.display = "block";
+}
+
+// 테스트 결과 공유 함수 (Web Share API를 사용하는 경우)
+function shareTest() {
+    navigator.share({
+        title: "내 마음의 동물 찾기 테스트 결과",
+        text: `당신은 ${results[userChoices[userChoices.length - 1]].animal}입니다.`,
+        url: window.location.href
+    })
+        .then(() => console.log("테스트 결과 공유 완료"))
+        .catch((error) => console.error("테스트 결과 공유 실패:", error));
+}
+
+// 테스트 결과 클립보드 복사 함수 (Web Share API를 지원하지 않는 경우)
+function copyToClipboard() {
+    const textToCopy = `내 마음의 동물 찾기 테스트 결과: ${results[userChoices[userChoices.length - 1]].animal}`;
+    const textarea = document.createElement("textarea");
+    textarea.value = textToCopy;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("테스트 결과가 클립보드에 복사되었습니다.");
+}
+
+// 초기화면 표시
+startScreen.style.display = "block";

@@ -1,44 +1,89 @@
+/* 웹 폰트 가져오기 (Google Fonts 사용 예) */
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+
+/* 기본 스타일 */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    font-family: "Poor Story", Arial, sans-serif;
+    font-weight: 400;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.container {
-    width: 90%;
-    max-width: 600px;
-    background-color: white;
+.screen {
+    display: none;
+    text-align: center;
     padding: 20px;
+    width: 80%;
+    max-width: 375px;
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.hidden {
-    display: none;
+/* Style the start image */
+.start-image {
+    max-width: 100%;
+    height: auto; /* Automatically adjust the height to maintain aspect ratio */
+    border-radius: 8px;
 }
 
-button {
+/* Style the result image */
+.result-image {
+    max-width: 100%;
+    height: auto; /* Automatically adjust the height to maintain aspect ratio */
+    border-radius: 8px;
+}
+
+
+#start-screen, #question-screen, #result-screen {
+    display: block;
+}
+
+.choice-button, #share-button, #restart-button {
+    font-family: "Poor Story", Arial, sans-serif;
+    font-weight: 400;
     display: block;
     width: 100%;
-    padding: 10px;
-    margin-top: 20px;
-    font-size: 16px;
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 1.2em;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: white;
+    background-color: #007BFF;
+    color: #fff;
     cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
+.choice-button:hover, #share-button:hover, #restart-button:hover {
     background-color: #0056b3;
 }
 
-#choices-container button {
-    margin-top: 10px;
+#result-description, #result-image, #question-title {
+    font-family: "Poor Story", Arial, sans-serif;
+    font-weight: 400;
+}
+
+/* 모바일 화면 크기 조정 */
+@media screen and (max-width: 375px) {
+    body {
+        font-size: 16px;
+    }
+
+    .screen {
+        padding: 15px;
+    }
+
+    .choice-button, #share-button, #restart-button {
+        font-size: 1em;
+        padding: 12px;
+        margin-top: 12px;
+    }
 }
