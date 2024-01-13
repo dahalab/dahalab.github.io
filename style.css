@@ -35,7 +35,7 @@ body {
 }
 
 #progress-container {
-    width: 80%; /* 화면 너비에 맞게 크기 조절 */
+    width: 100%; /* 화면 너비에 맞게 크기 조절 */
     max-width: 375px; /* iPhone 12 화면 너비 */
     margin-top: 20px;
     background-color: #ddd;
