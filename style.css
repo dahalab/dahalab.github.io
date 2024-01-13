@@ -1,46 +1,63 @@
+/* 웹 폰트 가져오기 (Google Fonts 사용 예) */
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+
 /* 기본 스타일 */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    overflow-x: hidden; /* 가로 스크롤 막기 */
+    overflow-x: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* 화면 높이의 100%를 사용하여 가운데 정렬 */
+    height: 100vh;
 }
 
 #quiz-container {
-    width: 80%; /* 화면 너비에 맞게 크기 조절 */
-    max-width: 375px; /* iPhone 12 화면 너비 */
-    background-color: #fff;
+    width: 80%;
+    max-width: 375px;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .question-button {
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
     display: block;
     width: 100%;
     padding: 15px;
     margin-top: 15px;
     font-size: 1.2em;
-    border: 1px solid #ddd;
+    border: none;
     border-radius: 5px;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #007BFF;
+    color: #fff;
     cursor: pointer;
-    text-align: left;
+    text-align: center;
+    transition: background-color 0.3s ease;
 }
 
+.question-button:hover {
+    background-color: #0056b3;
+}
+
+#result {
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
+}
+
+
 #progress-container {
-    width: 100%; /* 화면 너비에 맞게 크기 조절 */
-    max-width: 375px; /* iPhone 12 화면 너비 */
+    width: 100%;
+    max-width: 375px;
     margin-top: 20px;
-    background-color: #ddd;
+    background-color: transparent;
     border-radius: 5px;
-    height: 20px;
+    height: 10px;
 }
 
 #progress-bar {
@@ -51,9 +68,10 @@ body {
 }
 
 #share-button, #restart-button {
-    display: inline-block; /* 인라인 블록 요소로 표시 */
-    margin: 10px; /* 오른쪽 여백 추가 */
+    display: inline-block;
+    margin: 5px;
 }
+
 #share-button {
     background-color: #007BFF;
     color: #fff;
@@ -89,21 +107,21 @@ body {
 /* 모바일 화면 크기 조정 */
 @media screen and (max-width: 375px) {
     body {
-        font-size: 18px;
+        font-size: 16px;
     }
-    
+
     #quiz-container {
         padding: 15px;
     }
 
     .question-button {
-        font-size: 1.5em;
+        font-size: 1em;
         padding: 12px;
         margin-top: 12px;
     }
 
     #progress-container {
-        margin-top: 25px;
-        height: 25px;
+        margin-top: 15px;
+        height: 7px;
     }
 }
